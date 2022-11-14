@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './common/header';
+import { Fragment } from 'react';
 
 function App() {
   return (
+    <Fragment>
+    <Header></Header>
     <div className="App">
-      <Header></Header>
+     
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -21,6 +24,7 @@ function App() {
         </a>
       </header>
     </div>
+    </Fragment>
   );
 }
 
