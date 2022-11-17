@@ -1,5 +1,8 @@
-import React, {Component} from "react";
+import React from "react";
+import { connect, Connect } from "react-redux";
 import {CSSTransition} from 'react-transition-group';
+// import { searchBlur, searchFocus } from "./store/actionCreator";
+import {actionCreators} from './store';
 import {    
     HeaderWrapper,
     Logo,
@@ -9,62 +12,92 @@ import {
     NavSearch,
     Addition,
     Button,
+    SearchInfo,
+    SearchInfoTitle,
+    SearchInfoSwitch,
+    SearchInfoItem,
+    SearchInfoList,
 } from './style';
 
-export default class Header extends Component{
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            focused: false 
-        }
-        this.handleInputFocus = this.handleInputFocus.bind(this);
-        this.handleInputBlur = this.handleInputBlur.bind(this);
-    }
-
-    render(){
+const getListArea = (show) => {
+    if (show){
         return (
-            <HeaderWrapper> 
-                <Logo href='/'/> 
-                <Nav>
-                    <NavItem className="left active">Home</NavItem>
-                    <NavItem className="left">Download App</NavItem>
-                    <NavItem className="right">Login</NavItem>
-                    <NavItem className="right">
-                        <i className="iconfont"></i>
-                    </NavItem>
-                    <SearchWrapper>
-                        {/* <CSSTransition
-                            in={this.state.focused}
-                            timeout={200}
-                            className="slide"
-                            > */}
-                            <NavSearch 
-                                className={this.state.focused ? 'focused':''}
-                                onFocus={this.handleInputFocus}
-                                onBlur={this.handleInputBlur}>                           
-                            </NavSearch>
-                        {/* </CSSTransition> */}
-                    <i className={this.state.focused ? 'focused iconfont': 'iconfont'}>
-                        &#xe614;
-                    </i>
-                    </SearchWrapper>
-                </Nav>
-                <Addition>
-                    <Button className = 'reg'>Register</Button>
-                    <Button className = 'newPost'>New Post</Button>
-                </Addition>
-            </HeaderWrapper>
+            <SearchInfo>
+                <SearchInfoTitle>
+                        Hot Search
+                        <SearchInfoSwitch>
+                            Switch
+                        </SearchInfoSwitch>
+                </SearchInfoTitle>  
+                    <SearchInfoList>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                        <SearchInfoItem>Education</SearchInfoItem>
+                    </SearchInfoList>
+                </SearchInfo>
         )
     }
-    handleInputFocus(){
-        this.setState({
-            focused: true
-        })
-    }
-    handleInputBlur(){
-        this.setState({
-            focused: false
-        })
+    else{
+        return null;
     }
 }
+
+const Header=(props)=>{
+    return (
+        <HeaderWrapper> 
+            <Logo href='/'/> 
+            <Nav>
+                <NavItem className="left active">Home</NavItem>
+                <NavItem className="left">Download App</NavItem>
+                <NavItem className="right">Login</NavItem>
+                <NavItem className="right">
+                    <i className="iconfont"></i>
+                </NavItem>
+                <SearchWrapper>
+                    {/* <CSSTransition
+                        in={this.state.focused}
+                        timeout={200}
+                        className="slide"
+                        > */}
+                        <NavSearch 
+                            className={props.focused ? 'focused':''}
+                            onFocus={props.handleInputFocus}
+                            onBlur={props.handleInputBlur}>                           
+                        </NavSearch>
+                    {/* </CSSTransition> */}
+                <i className={props.focused ? 'focused iconfont': 'iconfont'}>
+                    &#xe614;
+                </i>
+                    {getListArea(props.focused)}
+                </SearchWrapper>
+            </Nav>
+            <Addition>
+                <Button className = 'reg'>Register</Button>
+                <Button className = 'newPost'>New Post</Button>
+            </Addition>
+        </HeaderWrapper>
+    )
+}
+
+
+const mapStateToProps = (state) =>{
+    return {
+        focused: state.header.get('focused')   
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return {
+        handleInputFocus(){            
+            dispatch(actionCreators.searchFocus());
+        },
+        handleInputBlur(){
+            dispatch(actionCreators.searchBlur());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
