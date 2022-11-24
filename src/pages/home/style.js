@@ -85,8 +85,19 @@ export const RecommendWrapper = styled.div`
 export const RecommendItem = styled.div`
     width: 280px;
     height: 50px;
-    background: url('../../../public/img/1669197312556.png');
-    backgroud-size: contain;
+    background: url(${(props) => props.imgUrl});
+    background-size: contain;   
+    margin-bottom: 5px;
+    border-radius: 4px;
 `;
+
+export const AuthorsWrapper = styled.div`
+    width: 278px;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+`
 
 

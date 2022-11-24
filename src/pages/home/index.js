@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Topic from './components/Topic';
 import List from './components/List';
 import Recommend from './components/Recommend';
 import Authors from './components/Authors';
+import { actionCreator } from './store';
 
 import { 
     HomeWrapper,
     HomeLeft,
     HomeRight,
 } from './style'
+// import { ResultType } from '@remix-run/router/dist/utils';
 
 class Home extends Component {
     render() {
@@ -28,6 +31,16 @@ class Home extends Component {
             </HomeWrapper>
         )
     }
+    componentDidMount() {
+        this.props.changeHomeData();
+    }
 }
 
-export default Home;
+const mapDispatch = (dispatch) => ({
+    changeHomeData() {
+        const action = actionCreator.getHomeInfo();
+        dispatch(action);
+    }
+})
+
+export default connect(null, mapDispatch) (Home);

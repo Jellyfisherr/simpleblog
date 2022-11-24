@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { AuthorsWrapper } from '../style';
 
 class Authors extends Component {
     render() {
         return(
-            <div>Authors</div>
+            <AuthorsWrapper>Authors</AuthorsWrapper>
         )
     }
 }
