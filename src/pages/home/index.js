@@ -5,6 +5,7 @@ import List from './components/List';
 import Recommend from './components/Recommend';
 import Authors from './components/Authors';
 import { actionCreator } from './store';
+import { BackTop } from './style';
 
 import { 
     HomeWrapper,
@@ -14,6 +15,11 @@ import {
 // import { ResultType } from '@remix-run/router/dist/utils';
 
 class Home extends Component {
+
+    handleScrollTop() {
+        window.scrollTo(0, 0);
+    }
+
     render() {
         return(
             <HomeWrapper>
@@ -28,19 +34,42 @@ class Home extends Component {
                     <Recommend />
                     <Authors />
                 </HomeRight>
+                { this.props.showScroll ?
+                <BackTop onClick={this.handleScrollTop}>Top</BackTop> : null}
             </HomeWrapper>
         )
     }
     componentDidMount() {
         this.props.changeHomeData();
+        this.bindEvents();
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.props.changeScrollTopShow);
+
+    }
+
+    bindEvents() {
+        window.addEventListener('scroll', this.props.changeScrollTopShow);
     }
 }
+
+const mapState = (state) => ({
+    showScroll: state.home.get('showScroll')
+})
 
 const mapDispatch = (dispatch) => ({
     changeHomeData() {
         const action = actionCreator.getHomeInfo();
         dispatch(action);
+    },
+    changeScrollTopShow() {
+        if (document.documentElement.scrollTop > 100) {
+            dispatch(actionCreator.toggleTopShow(true))
+        }else {
+            dispatch(actionCreator.toggleTopShow(false))
+        }
     }
 })
 
-export default connect(null, mapDispatch) (Home);
+export default connect(mapState, mapDispatch) (Home);
