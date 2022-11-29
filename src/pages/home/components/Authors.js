@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { AuthorsWrapper } from '../style';
 
-class Authors extends Component {
+class Authors extends PureComponent {
     render() {
         return(
             <AuthorsWrapper>Authors</AuthorsWrapper>

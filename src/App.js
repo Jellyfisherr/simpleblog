@@ -14,7 +14,7 @@ function App() {
       <Header />
       <Routes>       
       <Route path="/" element={<Home/>}/>
-      <Route path="/detail" element={<Detail/>} />
+      <Route path="/detail/:id" element={<Detail/>} />
 
           {/* <Route path='/' exact render={()=><div>home</div>}></Route>
           <Route path='/detail' exact render={()=><div>detail</div>}></Route> */}

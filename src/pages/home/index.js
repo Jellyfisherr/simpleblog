@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Topic from './components/Topic';
 import List from './components/List';
@@ -14,7 +14,7 @@ import {
 } from './style'
 // import { ResultType } from '@remix-run/router/dist/utils';
 
-class Home extends Component {
+class Home extends PureComponent {
 
     handleScrollTop() {
         window.scrollTo(0, 0);
@@ -45,7 +45,7 @@ class Home extends Component {
     }
 
     componentWillUnmount(){
-        window.removeEventListener('scroll', this.props.changeScrollTopShow);
+        window.removeEventListener('scroll', this.props.changeScrollTopShow );
 
     }
 
